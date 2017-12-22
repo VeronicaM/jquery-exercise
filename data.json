@@ -1,0 +1,45 @@
+[{
+        "NR. INTRARE": "NIR 17_12347",
+        "DATA INTRARE": "11/10/2017",
+        "FURNIZORI": "METRO CASH&CARRY SRL",
+        "NR. FACTURA": "FACT_12345_2017",
+        "MODEL DOCUMENT": "Factura furnizor marfa",
+        "DATA SCADENTA": "11/12/2017",
+        "VALOARE TOTALA": "200500",
+        "STARE FACTURA": "Returnata",
+        "TRIMISE IN CONTA": "DA"
+    },
+    {
+        "NR. INTRARE": "NIR 17_12342",
+        "DATA INTRARE": "12/05/2017",
+        "FURNIZORI": "METRO CASH&CARRY SRL",
+        "NR. FACTURA": "FACT_12345_2017",
+        "MODEL DOCUMENT": "Factura furnizor marfa",
+        "DATA SCADENTA": "11/02/2017",
+        "VALOARE TOTALA": "200000",
+        "STARE FACTURA": "Returnata",
+        "TRIMISE IN CONTA": "DA"
+    },
+    {
+        "NR. INTRARE": "NIR 17_12343",
+        "DATA INTRARE": "14/03/2017",
+        "FURNIZORI": "METRO CASH&CARRY SRL",
+        "NR. FACTURA": "FACT_12345_2017",
+        "MODEL DOCUMENT": "Factura furnizor marfa",
+        "DATA SCADENTA": "21/06/2017",
+        "VALOARE TOTALA": "210000",
+        "STARE FACTURA": "Returnata",
+        "TRIMISE IN CONTA": "DA"
+    },
+    {
+        "NR. INTRARE": "NIR 17_12349",
+        "DATA INTRARE": "13/01/2017",
+        "FURNIZORI": "METRO CASH&CARRY SRL",
+        "NR. FACTURA": "FACT_12345_2017",
+        "MODEL DOCUMENT": "Factura furnizor marfa",
+        "DATA SCADENTA": "11/06/2017",
+        "VALOARE TOTALA": "240000",
+        "STARE FACTURA": "Returnata",
+        "TRIMISE IN CONTA": "NU"
+    }
+]

@@ -1,0 +1,48 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+th[data-ascending="true"]::after {
+    content: "\02191";
+    padding: 5px;
+}
+
+th[data-ascending="none"]::after {
+    content: "\02191 \02193";
+    padding-left: 5px;
+}
+
+th[data-ascending="false"]::after {
+    content: "\02193";
+    padding: 5px;
+}
+
+.selected {
+    background-color: #00bcd4c4;
+}
+
+#invoices-table nav {
+    float: right;
+}
+
+#invoices-table {
+    padding: 40px;
+    margin: 20px;
+    font-size: 12px;
+    background-color: #ccffff7d;
+}
+
+#invoices-table thead {
+    background-color: #ccffff7d;
+}
+
+#invoices-table thead th {
+    padding: 5px;
+}
+
+#invoices-table table {
+    background-color: white;
+}
