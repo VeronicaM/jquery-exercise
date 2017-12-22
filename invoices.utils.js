@@ -3,6 +3,7 @@ var InvoiceTable = (function InvoiceTable() {
     var tableHeadersElement = $("#invoices-table thead");
     var tableRowsElement = $("#invoices-table tbody");
     var tableInfo = $("#invoices-table .info");
+    var addInvoiceButton = $("#addInvoice");
     //Consts initialisation
     var invoicesData = [];
     var formatter = new Intl.NumberFormat("ro-RO", {
@@ -64,41 +65,7 @@ var InvoiceTable = (function InvoiceTable() {
             .always(function() {
                 //set loading to false
             });
-
-        //add click event listeners  for selecting current row
-        tableRowsElement.delegate("input[type='checkbox']", "click", function(e) {
-            e.stopPropagation();
-            $(this)
-                .parents()
-                .closest("tr")
-                .toggleClass("selected");
-        });
-        tableRowsElement.delegate("tr", "click", function(e) {
-            //  e.stopPropagation();
-            $(this).toggleClass("selected");
-            var checkbox = $(this).find("input[type='checkbox']");
-            checkbox.prop("checked", !checkbox.prop("checked"));
-        });
-        //add click event listener on headers for sorting purposes
-        tableHeadersElement.delegate(":not(th:first-child)", "click", function() {
-            //reset sorting icon on the remaining headers
-            tableHeadersElement
-                .find(":not(th:first-child)")
-                .not($(this))
-                .attr("data-ascending", "none");
-            //toggle sorting direction on clicked column
-            var isAscending =
-                $(this).attr("data-ascending") === "none" ||
-                $(this).attr("data-ascending") === "true" ?
-                false :
-                true;
-            $(this).attr("data-ascending", isAscending);
-            //sort the data and redisplay it
-            invoicesData = sortColumn(invoicesData, $(this).text(), isAscending);
-            initRows(invoicesData);
-            //update sorted by info
-            displayInfo($(this).text(), isAscending ? "asc" : "desc");
-        });
+        addEventListeners();
     }
 
     function isDate(value) {
@@ -142,5 +109,54 @@ var InvoiceTable = (function InvoiceTable() {
             }
             return result;
         });
+    }
+
+    function addEventListeners() {
+        //add click event listeners  for selecting current row
+        tableRowsElement.delegate(
+            "input[type='checkbox']",
+            "click",
+            selectRowFromCheckbox
+        );
+        tableRowsElement.delegate("tr", "click", selectRow);
+        //add click event listener on headers for sorting purposes
+        tableHeadersElement.delegate(":not(th:first-child)", "click", sort);
+        addInvoiceButton.on("click", function() {
+            $("#invoiceModal").modal("show");
+        });
+
+        function sort() {
+            //reset sorting icon on the remaining headers
+            tableHeadersElement
+                .find(":not(th:first-child)")
+                .not($(this))
+                .attr("data-ascending", "none");
+            //toggle sorting direction on clicked column
+            var isAscending =
+                $(this).attr("data-ascending") === "none" ||
+                $(this).attr("data-ascending") === "true" ?
+                false :
+                true;
+            $(this).attr("data-ascending", isAscending);
+            //sort the data and redisplay it
+            invoicesData = sortColumn(invoicesData, $(this).text(), isAscending);
+            initRows(invoicesData);
+            //update sorted by info
+            displayInfo($(this).text(), isAscending ? "asc" : "desc");
+        }
+
+        function selectRow(e) {
+            $(this).toggleClass("selected");
+            var checkbox = $(this).find("input[type='checkbox']");
+            checkbox.prop("checked", !checkbox.prop("checked"));
+        }
+
+        function selectRowFromCheckbox(e) {
+            e.stopPropagation();
+            $(this)
+                .parents()
+                .closest("tr")
+                .toggleClass("selected");
+        }
     }
 })();
