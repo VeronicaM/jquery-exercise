@@ -4,6 +4,20 @@ var InvoiceTable = (function InvoiceTable() {
     var tableRowsElement = $("#invoices-table tbody");
     var tableInfo = $("#invoices-table .info");
     var addInvoiceButton = $("#addInvoice");
+    var saveInvoiceButton = $("#createInvoice");
+    var submitForm = $("#submitCreateForm");
+    var saveInvoiceForm = $("#createInvoiceForm");
+    var headers = [
+        "NR. INTRARE",
+        "DATA INTRARE",
+        "FURNIZORI",
+        "NR. FACTURA",
+        "MODEL DOCUMENT",
+        "DATA SCADENTA",
+        "VALOARE TOTALA",
+        "STARE FACTURA",
+        "TRIMISE IN CONTA"
+    ];
     //Consts initialisation
     var invoicesData = [];
     var formatter = new Intl.NumberFormat("ro-RO", {
@@ -59,8 +73,8 @@ var InvoiceTable = (function InvoiceTable() {
             .done(function(data) {
                 invoicesData = data;
                 initRows(invoicesData);
-                initHeaders([""].concat(Object.keys(invoicesData[0])));
-                displayInfo("", "");
+                initHeaders([""].concat(headers));
+                displaySortingInfo("", "");
             })
             .always(function() {
                 //set loading to false
@@ -76,7 +90,7 @@ var InvoiceTable = (function InvoiceTable() {
         return !isNaN(Number(value));
     }
 
-    function displayInfo(sortingColumn, direction) {
+    function displaySortingInfo(sortingColumn, direction) {
         tableInfo.html(
             "Showing " +
             invoicesData.length +
@@ -91,7 +105,6 @@ var InvoiceTable = (function InvoiceTable() {
 
     function sortColumn(data, byKey, isAscending) {
         return data.sort(function(a, b) {
-            // if (!a[byKey] && !b[byKey]) return null;
             var testDate = isDate(a[byKey]);
             var testNumeric = isNumber(a[byKey]);
             if (testDate) {
@@ -124,6 +137,28 @@ var InvoiceTable = (function InvoiceTable() {
         addInvoiceButton.on("click", function() {
             $("#invoiceModal").modal("show");
         });
+        saveInvoiceButton.on("click", function(e) {
+            submitForm.click();
+        });
+        submitForm.on("click", function(e) {
+            var form_data = saveInvoiceForm.serializeArray();
+            var error_free = true;
+            var newInvoice = {};
+            for (var input in form_data) {
+                var element = $("#" + form_data[input]["name"]);
+                if (element[0].validationMessage) {
+                    error_free = false;
+                } else {
+                    newInvoice[form_data[input]["name"]] = form_data[input]["value"];
+                }
+            }
+            if (error_free) {
+                e.preventDefault();
+                $("#invoiceModal").modal("hide");
+                //make backend call to save invoice
+                invoicesData.push(newInvoice);
+            }
+        });
 
         function sort() {
             //reset sorting icon on the remaining headers
@@ -142,7 +177,7 @@ var InvoiceTable = (function InvoiceTable() {
             invoicesData = sortColumn(invoicesData, $(this).text(), isAscending);
             initRows(invoicesData);
             //update sorted by info
-            displayInfo($(this).text(), isAscending ? "asc" : "desc");
+            displaySortingInfo($(this).text(), isAscending ? "asc" : "desc");
         }
 
         function selectRow(e) {

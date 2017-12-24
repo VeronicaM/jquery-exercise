@@ -1,3 +1,9 @@
+/*
+*************************************************
+    invoices list
+*************************************************
+*/
+
 body {
     display: flex;
     justify-content: center;
@@ -21,7 +27,7 @@ th[data-ascending="false"]::after {
 }
 
 .selected {
-    background-color: #00bcd4c4;
+    background-color: #51b0d14f;
 }
 
 #invoices-table nav {
@@ -45,4 +51,23 @@ th[data-ascending="false"]::after {
 
 #invoices-table table {
     background-color: white;
+}
+
+
+/*
+*************************************************
+  Create invoice modal
+*************************************************
+*/
+
+label {
+    font-weight: 600;
+}
+
+.modal-content {
+    padding: 20px;
+}
+
+#submitCreateForm {
+    display: none;
 }
